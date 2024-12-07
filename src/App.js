@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { addTodo, deleteTodo, toggleComplete } from './redux/todoSlice';
+import { addTodo, deleteTodo, editTodo, toggleComplete } from './redux/todoSlice';
 
 function App() {
   const [text, setText] = useState('')
@@ -21,7 +21,10 @@ function App() {
   const handleDeleteTodo = (id) => {
     dispatch(deleteTodo(id));
   };
-
+  const handleEditTodo = (id) => {
+    if (text)
+      dispatch(editTodo({ id: id, text: text }))
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -40,7 +43,7 @@ function App() {
               <button onClick={() => handleToggleComplete(todo.id)}>
                 {todo.completed ? "Mark Incomplete" : "Mark Complete"}
               </button>
-              <button>edit</button>
+              <button onClick={() => handleEditTodo(todo.id)}>edit</button>
               <button onClick={() => handleDeleteTodo(todo.id)}> Delete </button>
             </li>
           ))}
